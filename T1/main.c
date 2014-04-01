@@ -13,9 +13,13 @@ void menu() {
     int cmd;
 
     do {
-        printf("+---------------+\n");
-        printf("|0. Salir\t|\n");
-        printf("+---------------+\n");
+        printf("+-----------------------+\n");
+        printf("|1. Ingresar Datos\t|\n");
+        printf("|2. Buscar Archivos\t|\n");
+        printf("|3. Eliminar Datos\t|\n");
+        printf("|4. Calcular Tiempo\t|\n");
+        printf("|0. Salir\t\t|\n");
+        printf("+-----------------------+\n");
         printf("> ");
         scanf("%d", &cmd);
 
