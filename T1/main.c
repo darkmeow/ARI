@@ -1,6 +1,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+//Prototipo Bloque
+struct bloque{
+    char nombreArchivo[30];
+    struct bloque* bloqueSiguiente;
+    struct bloque* pistaAnterior;
+    struct bloque* pistaSiguiente;
+};
+//Prototipo lector-escritora
+struct lector{
+    int pistaActual;
+    int sectorActual;
+    struct bloque* cabeza;
+};
+
+
 void fat();
 void menu();
 
