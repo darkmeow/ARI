@@ -29,16 +29,16 @@ void menu() {
                 exit(0);
                 break;
             case 1:
-                printf("estás en la opción 1\n");
+                printf("Estás en la opción 1\n");
                 break;
             case 2:
-                printf("estás en la opción 2\n");
+                printf("Estás en la opción 2\n");
                 break;
             case 3:
-                printf("estás en la opción 3\n");
+                printf("Estás en la opción 3\n");
                 break;
             case 4:
-                printf("estás en la opción 4\n");
+                printf("Estás en la opción 4\n");
                 break;
             default:
                 printf("\n*** Entrada inválida ***\n\n");
