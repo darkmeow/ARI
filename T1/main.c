@@ -42,101 +42,28 @@ int main() {
 }
 
 int fat(){
+    //char *var[80];
+    FILE* archivo;
+    archivo=fopen("test.txt","r+b");
+    int bytes_read;
+  int nbytes = 100;
+  char *my_string;
 
-FILE* fichero; 
-char *arreglo[33];
-char *lee; 
-int i; 
+  puts ("Please enter a line of text.");
 
-if( (fichero = fopen("test.txt", "r")) == NULL ){ 
-puts("No se pudo abrir el fichero"); 
-return 1; 
-} 
+  /* These 2 lines are the heart of the program. */
+  my_string = (char *) malloc (nbytes + 1);
+  bytes_read = getline (&my_string, &nbytes, archivo);
 
-i = 0; 
-while( fscanf(fichero, "%s", lee) != EOF ){ 
-    //arreglo[i] = (char*)malloc(sizeof(lee));
-    arreglo[i] = lee; 
-    ++i; 
-
-} 
-
-fclose( fichero ); 
-
-    puts("Contenido del fichero:"); 
-    for(i = 0; i < 5; ++i) 
-    printf("%s ", arreglo[i]); 
-
-    return 0; 
-    
-    /*
-    FILE *archivo;
- 
- 	char caracteres[80];
-    char array[80];
-    int i=0;
- 
- 	archivo = fopen("test.txt","r");
- 
- 	if (archivo == NULL)
- 		exit(1);
- 
- 	//printf("\nEl contenido del archivo de prueba es \n\n");
- 	while (feof(archivo) == 0)
- 	{
- 		fgets(caracteres,80,archivo);
- 		printf("Esto es lo que contiene caracteres %s", caracteres);
-        	
+  if (bytes_read == -1)
+    {
+      puts ("ERROR!");
     }
-        fclose(archivo);
-        //while((caracteres[i])!="\0"){
-          //  array[i]=caracteres[i];
-            //array[i]=malloc(sizeof(caracteres[i]);
-            //strcpy(array[i],caracteres[i]);
-         //   i++;
-        //}
-    FILE *archivo;
-    char caracter[33];
-    char cadena[33];
-    char *array[80];
-    char var[100];
-    int i=0;
-    archivo = fopen("test.txt","r");
-    if(archivo == NULL){
-        printf("\nError de Apertura del archivo\n\n");
-    }else{
-        //printf("\nEl contenido de prueba del archivo es: \n\n");
-     
-        //while(feof(archivo)==0){    
-        while(fscanf(archivo,"%s",var)!=EOF){
-        
-            //caracter = fgetc(archivo)!= var;
-                fgets(var,100,archivo);
-                
-                if(var[i]!="\n"){
-
-                    cadena[i]=var[i];
-                }else{
-        
-                //(var=(strtok(cadena,"o "));
-                
-                //fgets(var,33,archivo);
-
-                array[i]=malloc(sizeof(var));
-                strcpy(array[i],var);
-                printf("\n Este es el valor %d que contiene %s\n",i, array[i]);
-                i++;
-                }
-               
-            //}
-        
-        }
-    }
-    
-    fclose(archivo);
-   
-   */ 
-   
+  else
+    {
+      puts ("You typed:");
+      puts (my_string);
+    } 
 
 }
 
