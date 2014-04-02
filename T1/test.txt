@@ -1,0 +1,8 @@
+primera 1
++ 2
++ 3
++ eof
+-
+segundo 6
++ 7
++ eof
