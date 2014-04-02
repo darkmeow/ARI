@@ -44,27 +44,21 @@ int main() {
 int fat(){
     //char *var[80];
     FILE* archivo;
-    archivo=fopen("test.txt","r+b");
-    int bytes_read;
-  int nbytes = 100;
-  char *my_string;
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
 
-  puts ("Please enter a line of text.");
+    archivo = fopen("test.txt", "r");
+    if (archivo == NULL)
+        exit(EXIT_FAILURE);
 
-  /* These 2 lines are the heart of the program. */
-  my_string = (char *) malloc (nbytes + 1);
-  bytes_read = getline (&my_string, &nbytes, archivo);
-
-  if (bytes_read == -1)
-    {
-      puts ("ERROR!");
+   while ((read = getline(&line, &len, archivo)) != -1) {
+        printf("Retrieved line of length %zu :\n", read);
+        printf("%s", line);
     }
-  else
-    {
-      puts ("You typed:");
-      puts (my_string);
-    } 
 
+   free(line);
+    exit(EXIT_SUCCESS);
 }
 
 void menu() {
