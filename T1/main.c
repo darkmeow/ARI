@@ -30,7 +30,7 @@ bloque *crearbloque(char nombre[30], struct bloque *next, struct bloque *pa, str
 }
 //_______________________________---
 
-int fat();
+void fat();
 void menu();
 
 int main() {
@@ -41,26 +41,48 @@ int main() {
     return 0;
 }
 
-int fat(){
-    //char *var[80];
+void fat(){
     FILE* archivo;
     char *line = NULL;
     size_t len = 0;
     ssize_t read;
+    char *arreglo[80];
+    char *nombres[80];
 
+    int i,j=0;
     archivo = fopen("test.txt", "r");
     if (archivo == NULL)
         exit(EXIT_FAILURE);
 
    while ((read = getline(&line, &len, archivo)) != -1) {
-        printf("Retrieved line of length %zu :\n", read);
-        printf("%s", line);
+        //printf("Retrieved line of length %zu :\n", read);
+        //printf("%s", line);
+        arreglo[i]=(char*)malloc(sizeof(read));//asignar el espacio que ocupa read a la posicion del arreglo
+        strcpy(arreglo[i],line);//copio el contenido de line en el arreglo
+        //printf("%s se llena\n",arreglo[i]);
+        i++;
     }
+        free(line); //libero el buffer
 
-   free(line);
-    exit(EXIT_SUCCESS);
+    for(j=0;j<i;j++){
+
+        if(strcmp(arreglo[j],"-\n")==0){
+           // printf("ESPACIO VACÍO Posición: %d, Dato: %s \n",j, arreglo[j]);
+        }else if(strcmp(arreglo[j],"+ eof\n")==0){
+
+            //printf("ESTO ES UNA LINEA CON EOF Posición: %d, Dato: %s \n",j, arreglo[j]);
+        }else if(arreglo[j][0]=='+'){
+            //printf("ESTO ES UNA LINEA CON +++ Posición: %d, Dato: %s \n",j, arreglo[j]);
+        }else{
+           
+            int k=0;
+            nombres[k]=(char*)malloc(sizeof(read));
+            strcpy(nombres[k],arreglo[j]);
+            printf("Posición: %d, Dato: %s \n",j, nombres[k]);
+            k++;
+        }
+    }
 }
-
 void menu() {
     int cmd;
 
