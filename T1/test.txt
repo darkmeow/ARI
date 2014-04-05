@@ -2,9 +2,14 @@ primera 1
 + 2
 + 3
 + eof
--
++ 10
 segundo 6
 + 7
++ eof
+-
++ 11
++ 12
++ 13
 + eof
 -
 -
@@ -64,12 +69,7 @@ segundo 6
 -
 -
 -
--
--
--
--
--
--
+archivolinea72 4
 -
 -
 -

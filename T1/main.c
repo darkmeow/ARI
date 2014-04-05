@@ -9,16 +9,15 @@ typedef struct bloque{
     struct bloque* pistaAnterior;
     struct bloque* pistaSiguiente;
 }bloque;
-//Prototipo lector-escritora
+//Estructura lector-escritora
 struct lector{
     int pistaActual;
     int sectorActual;
     struct bloque* cabeza;
 };
-
 //Fucion para crear bloque
 bloque *crearbloque(char nombre[30], struct bloque *next, struct bloque *pa, struct bloque *ps){
-    bloque *pb=malloc(sizeof(bloque));
+     bloque *pb=malloc(sizeof(bloque));
     strcpy(pb->nombreArchivo, nombre);
     pb->bloqueSiguiente=(bloque*) malloc(sizeof(bloque));
     pb->pistaAnterior=(bloque*) malloc(sizeof(bloque));
@@ -28,7 +27,10 @@ bloque *crearbloque(char nombre[30], struct bloque *next, struct bloque *pa, str
     pb->pistaSiguiente=ps;
     return pb;
 }
-//_______________________________---
+
+
+//_______________________________
+
 
 void fat();
 void menu();
@@ -64,25 +66,110 @@ void fat(){
     }
         free(line); //libero el buffer
 
+        //Pasaré la información de la tabla fat a bloques
+
+        bloque *arreglo_bloque[80];
+    
     for(j=0;j<i;j++){
-
-        if(strcmp(arreglo[j],"-\n")==0){
-           // printf("ESPACIO VACÍO Posición: %d, Dato: %s \n",j, arreglo[j]);
-        }else if(strcmp(arreglo[j],"+ eof\n")==0){
-
-            //printf("ESTO ES UNA LINEA CON EOF Posición: %d, Dato: %s \n",j, arreglo[j]);
-        }else if(arreglo[j][0]=='+'){
-            //printf("ESTO ES UNA LINEA CON +++ Posición: %d, Dato: %s \n",j, arreglo[j]);
-        }else{
-           
-            int k=0;
-            nombres[k]=(char*)malloc(sizeof(read));
-            strcpy(nombres[k],arreglo[j]);
-            printf("Posición: %d, Dato: %s \n",j, nombres[k]);
-            k++;
+        if(arreglo[j]!=NULL){
+            arreglo_bloque[j]=crearbloque(arreglo[j],NULL,NULL,NULL);
+           // printf("Indice: %d Nombre del Bloque: %s \n",j, arreglo_bloque[j]->nombreArchivo);//creo arreglo de bloques!
         }
     }
+    
+    //Reconoceré que hay en cada línea
+    int m=0;
+    
+    for(m=0;m<i;m++){
+        if(strcmp(arreglo[m],"-\n")==0){
+           // printf("ESPACIO VACÍO Posición: %d, Dato: %s \n",j, arreglo[j]);
+        }else if(strcmp(arreglo[m],"+ eof\n")==0){
+
+            //printf("ESTO ES UNA LINEA CON EOF Posición: %d, Dato: %s \n",j, arreglo[j]);
+        }else if(arreglo[m][0]=='+'){
+            //printf("ESTO ES UNA LINEA CON +++ Posición: %d, Dato: %s \n",j, arreglo[j]);
+        }else{
+                //bloque *nombres[80];//arreglo que guarda bloques enlazados
+                char *p;
+                int reversa=0;
+                char *substring;
+                int e=0;
+                p= strchr(arreglo[m],' ');
+                e= atoi(p);
+                //printf("Posición: %d, Número %s \n",j, arreglo[j][p]);
+                //printf("Posicion de j: %d, Valor de p:%s, En el atoi:    %d\n",j,p+1,e);
+                reversa= p-arreglo[m];
+                substring=(char*)malloc(sizeof(char)*reversa);
+                strncpy(substring,arreglo[m],reversa);
+
+                //printf("el arreglo de bloque es este: %s \n")
+                //printf("atoi(p): %d, p: %s\n", e, p); 
+               //     strcpy(arreglo_bloque[m]->nombreArchivo,substring);
+               //     arreglo_bloque[m]->bloqueSiguiente=crearbloque(arreglo_bloque[m]->nombreArchivo, arreglo_bloque[e], NULL, NULL);
+                 //   strcpy(arreglo_bloque[e]->nombreArchivo,arreglo_bloque[m]->nombreArchivo);
+
+                    /*
+                char *valornum;
+                int num=0;
+                int prueba=0;
+                int k=0;
+                prueba=e;
+                */
+                char *valornum;
+                int num=0;
+                int prueba=0;
+                int k=0;
+                prueba=e;
+
+                while(strcmp(arreglo[prueba],"+ eof\n")!=0){
+                    
+                printf("Posición de m: %d, Siguiente indice en fat:%s\n",m,arreglo[prueba]);
+                    
+                    valornum= strchr(arreglo[prueba],' ');
+                    num= atoi(valornum);
+                    prueba=num;
+                    
+                }
+                printf("EOF\n");
+                k++;
+        
+        }
 }
+}
+
+/*
+                int k=0;
+                int t=0;
+                bloque *inicial = arreglo_bloque[0];
+                while(inicial->bloqueSiguiente != NULL) {
+                    printf("Bloque Inicial %p, nombre: %s\n",&inicial,inicial->nombreArchivo);
+                    inicial = inicial->bloqueSiguiente;
+                }
+
+*/
+ 
+
+/*
+
+                //int l=0;
+                //while(nombres[l]!=NULL){
+                    
+                    //printf("%s\n",nombres[l].nombreArchivo);
+                //    l++;
+                //}
+    //printf("%s\n",test->nombreArchivo);
+                
+                //while(strcmp(arreglo[j]," ")==0);{
+                    //while(strcmp(arreglo[j]," ")!=0){
+                    //    printf("Posición: %d, Número %s \n",j, arreglo[j]);
+                    //}
+           // }
+            //
+            //strcpy(nombres[k],arreglo[j]);
+            //printf("Posición: %d, Dato: %s \n",j, nombres[k]);
+            
+            //k++;*/
+     
 void menu() {
     int cmd;
 
