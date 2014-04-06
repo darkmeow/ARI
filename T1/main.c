@@ -66,46 +66,45 @@ void menu() {
                 int str;
                 for(i = 0; i < 80; i++) {
                 //printf("%p -> %s\n", bloques[i], bloques[i]->nombre);
-                printf("Línea: %d -> %s\n", i, bloques[i]->nombre);
+                printf("Línea: %d -> %s", i, tablaFAT[i]);
                 }
                 printf("Dónde desea ingresar su archivo? ");
                 scanf("%d",&str);
                 printf("Lo que ingreso es: %d\n", str);
-                printf("El valor en el arreglo es: %s\n", bloques[str]->nombre);      
+                printf("El valor en el arreglo es: %s\n", tablaFAT[str]);      
 
-                if(strcmp(bloques[str]->nombre, "-\n") == 0){
-                    printf("es un espacio vacío %s\n",bloques[str]->nombre);
-                }else if(strcmp(bloques[str]->nombre, "+ eof\n") == 0){
-                    printf("corresponde a un eof %s\n",bloques[str]->nombre);
-                }else if(bloques[str]->nombre[0] == '+' ){
+                if( !(strcmp(tablaFAT[str], "-\n") == 0 ||
+                    strcmp(tablaFAT[str], "+ eof\n") == 0 ||
+                    tablaFAT[str][0] == '+' )) { // si es nombre
 
-                    printf("Es un + %s\n", bloques[str]->nombre);
+                    printf("ES UN nombre: %s", tablaFAT[str]);
+                }else{
                 
-                }else{//entonces es nombre y se debe borrar todos sus bloques
-                    printf("Es un nombre %s\n", bloques[str]->nombre);
-
+                    printf("NO ES UN nombre: %s", tablaFAT[str]);
                 }
-/*
-                char *aux;
-                char *num;
-                num = strchr(bloques[i], ' ');
-                int is = atoi(num); // indice siguiente
-                int p = num - bloques[i];
-                aux = (char *)malloc(sizeof(char) * p);
-                strncpy(aux,bloques[i],p);
-                //printf("is: %d, nombre: %s\n", is, nombre);
-                strcpy(bloques[i]->nombre, nombre);
-                int j = is;
-                bloques[i]->s = bloques[j];
-                while(!strcmp(bloques[j], "+ eof\n") == 0) {
-                    strcpy(bloques[j]->nombre, nombre);
-                    num = strchr(bloques[j], ' ');
-                    bloques[j]->s = bloques[atoi(num)];
-                    j = atoi(num); // indice siguiente
-                }
+                /*
+            char *nombre;
+            char *num;
+            num = strchr(tablaFAT[i], ' ');
+            int is = atoi(num); // indice siguiente
+            int p = num - tablaFAT[i];
+            nombre = (char *)malloc(sizeof(char) * p);
+            strncpy(nombre,tablaFAT[i],p);
+            //printf("is: %d, nombre: %s\n", is, nombre);
+            strcpy(bloques[i]->nombre, nombre);
+            int j = is;
+            bloques[i]->s = bloques[j];
+            while(!strcmp(tablaFAT[j], "+ eof\n") == 0) {
+                strcpy(bloques[j]->nombre, nombre);
+                num = strchr(tablaFAT[j], ' ');
+                bloques[j]->s = bloques[atoi(num)];
+                j = atoi(num); // indice siguiente
             }
+        }
 
-  */             
+*/
+
+                
                 break;
             case 2:
                 printf("Estás en la opción 2\n");
