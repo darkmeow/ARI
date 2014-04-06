@@ -2,174 +2,45 @@
 #include <stdio.h>
 #include <string.h>
 
-//Estructura Bloque
-typedef struct bloque{
-    char nombreArchivo[30];
-    struct bloque* bloqueSiguiente;
-    struct bloque* pistaAnterior;
-    struct bloque* pistaSiguiente;
-}bloque;
-//Estructura lector-escritora
-struct lector{
-    int pistaActual;
-    int sectorActual;
-    struct bloque* cabeza;
-};
-//Fucion para crear bloque
-bloque *crearbloque(char nombre[30], struct bloque *next, struct bloque *pa, struct bloque *ps){
-     bloque *pb=malloc(sizeof(bloque));
-    strcpy(pb->nombreArchivo, nombre);
-    pb->bloqueSiguiente=(bloque*) malloc(sizeof(bloque));
-    pb->pistaAnterior=(bloque*) malloc(sizeof(bloque));
-    pb->pistaSiguiente=(bloque*) malloc(sizeof(bloque));
-    pb->bloqueSiguiente=next;
-    pb->pistaAnterior=pa;
-    pb->pistaSiguiente=ps;
-    return pb;
+// prototipos
+void menu();
+void loadFAT();
+void crearBloquesFAT();
+void printFAT();
+void printBloques();
+
+// globales
+typedef struct bloque {
+    char nombre[30];
+    struct bloque *s;
+    struct bloque *ps;
+    struct bloque *pa;
+} bloque;
+
+char *tablaFAT[80]; // tabla FAT como strings
+
+bloque *bloques[80]; // tabla FAT como structs bloque
+
+struct bloque *crearBloque(char nombre[30], struct bloque *siguiente, struct bloque *pistaAnterior, struct bloque *pistaSiguiente) {
+    bloque *bloqueNuevo = (bloque*) malloc(sizeof(bloque));
+    bloqueNuevo->s = (bloque*) malloc(sizeof(bloque));
+    bloqueNuevo->ps = (bloque*) malloc(sizeof(bloque));
+    bloqueNuevo->pa = (bloque*) malloc(sizeof(bloque));
+    strcpy(bloqueNuevo->nombre, nombre);
+    bloqueNuevo->s = siguiente;
+    bloqueNuevo->ps = pistaSiguiente;
+    bloqueNuevo->pa = pistaAnterior;
+    return bloqueNuevo;
 }
 
-
-//_______________________________
-
-
-void fat();
-void menu();
-
 int main() {
-    fat();
-    //struct bloque *test=crearbloque("test",NULL,NULL,NULL);
-    //printf("%s\n",test->nombreArchivo);
+    loadFAT();
+    //printFAT();
+    //printBloques();
     menu();
     return 0;
 }
 
-void fat(){
-    FILE* archivo;
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
-    char *arreglo[80];
-    char *nombres[80];
-
-    int i,j=0;
-    archivo = fopen("test.txt", "r");
-    if (archivo == NULL)
-        exit(EXIT_FAILURE);
-
-   while ((read = getline(&line, &len, archivo)) != -1) {
-        //printf("Retrieved line of length %zu :\n", read);
-        //printf("%s", line);
-        arreglo[i]=(char*)malloc(sizeof(read));//asignar el espacio que ocupa read a la posicion del arreglo
-        strcpy(arreglo[i],line);//copio el contenido de line en el arreglo
-        //printf("%s se llena\n",arreglo[i]);
-        i++;
-    }
-        free(line); //libero el buffer
-
-        //Pasaré la información de la tabla fat a bloques
-
-        bloque *arreglo_bloque[80];
-    
-    for(j=0;j<i;j++){
-        if(arreglo[j]!=NULL){
-            arreglo_bloque[j]=crearbloque(arreglo[j],NULL,NULL,NULL);
-           // printf("Indice: %d Nombre del Bloque: %s \n",j, arreglo_bloque[j]->nombreArchivo);//creo arreglo de bloques!
-        }
-    }
-    
-    //Reconoceré que hay en cada línea
-    int m=0;
-    
-    for(m=0;m<i;m++){
-        if(strcmp(arreglo[m],"-\n")==0){
-           // printf("ESPACIO VACÍO Posición: %d, Dato: %s \n",j, arreglo[j]);
-        }else if(strcmp(arreglo[m],"+ eof\n")==0){
-
-            //printf("ESTO ES UNA LINEA CON EOF Posición: %d, Dato: %s \n",j, arreglo[j]);
-        }else if(arreglo[m][0]=='+'){
-            //printf("ESTO ES UNA LINEA CON +++ Posición: %d, Dato: %s \n",j, arreglo[j]);
-        }else{
-                //bloque *nombres[80];//arreglo que guarda bloques enlazados
-                char *p;
-                int reversa=0;
-                char *substring;
-                int e=0;
-                p= strchr(arreglo[m],' ');
-                e= atoi(p);
-                //printf("Posición: %d, Número %s \n",j, arreglo[j][p]);
-                //printf("Posicion de j: %d, Valor de p:%s, En el atoi:    %d\n",j,p+1,e);
-                reversa= p-arreglo[m];
-                substring=(char*)malloc(sizeof(char)*reversa);
-                strncpy(substring,arreglo[m],reversa);
-
-                //printf("el arreglo de bloque es este: %s \n")
-                //printf("atoi(p): %d, p: %s\n", e, p); 
-               //     strcpy(arreglo_bloque[m]->nombreArchivo,substring);
-               //     arreglo_bloque[m]->bloqueSiguiente=crearbloque(arreglo_bloque[m]->nombreArchivo, arreglo_bloque[e], NULL, NULL);
-                 //   strcpy(arreglo_bloque[e]->nombreArchivo,arreglo_bloque[m]->nombreArchivo);
-
-                    /*
-                char *valornum;
-                int num=0;
-                int prueba=0;
-                int k=0;
-                prueba=e;
-                */
-                char *valornum;
-                int num=0;
-                int prueba=0;
-                int k=0;
-                prueba=e;
-
-                while(strcmp(arreglo[prueba],"+ eof\n")!=0){
-                    
-                printf("Posición de m: %d, Siguiente indice en fat:%s\n",m,arreglo[prueba]);
-                    
-                    valornum= strchr(arreglo[prueba],' ');
-                    num= atoi(valornum);
-                    prueba=num;
-                    
-                }
-                printf("EOF\n");
-                k++;
-        
-        }
-}
-}
-
-/*
-                int k=0;
-                int t=0;
-                bloque *inicial = arreglo_bloque[0];
-                while(inicial->bloqueSiguiente != NULL) {
-                    printf("Bloque Inicial %p, nombre: %s\n",&inicial,inicial->nombreArchivo);
-                    inicial = inicial->bloqueSiguiente;
-                }
-
-*/
- 
-
-/*
-
-                //int l=0;
-                //while(nombres[l]!=NULL){
-                    
-                    //printf("%s\n",nombres[l].nombreArchivo);
-                //    l++;
-                //}
-    //printf("%s\n",test->nombreArchivo);
-                
-                //while(strcmp(arreglo[j]," ")==0);{
-                    //while(strcmp(arreglo[j]," ")!=0){
-                    //    printf("Posición: %d, Número %s \n",j, arreglo[j]);
-                    //}
-           // }
-            //
-            //strcpy(nombres[k],arreglo[j]);
-            //printf("Posición: %d, Dato: %s \n",j, nombres[k]);
-            
-            //k++;*/
-     
 void menu() {
     int cmd;
 
@@ -190,7 +61,51 @@ void menu() {
                 exit(0);
                 break;
             case 1:
-                printf("Estás en la opción 1\n");
+                printf("Estás en la Ingresar Datos\n");
+                int i;
+                int str;
+                for(i = 0; i < 80; i++) {
+                //printf("%p -> %s\n", bloques[i], bloques[i]->nombre);
+                printf("Línea: %d -> %s\n", i, bloques[i]->nombre);
+                }
+                printf("Dónde desea ingresar su archivo? ");
+                scanf("%d",&str);
+                printf("Lo que ingreso es: %d\n", str);
+                printf("El valor en el arreglo es: %s\n", bloques[str]->nombre);      
+
+                if(strcmp(bloques[str]->nombre, "-\n") == 0){
+                    printf("es un espacio vacío %s\n",bloques[str]->nombre);
+                }else if(strcmp(bloques[str]->nombre, "+ eof\n") == 0){
+                    printf("corresponde a un eof %s\n",bloques[str]->nombre);
+                }else if(bloques[str]->nombre[0] == '+' ){
+
+                    printf("Es un + %s\n", bloques[str]->nombre);
+                
+                }else{//entonces es nombre y se debe borrar todos sus bloques
+                    printf("Es un nombre %s\n", bloques[str]->nombre);
+
+                }
+/*
+                char *aux;
+                char *num;
+                num = strchr(bloques[i], ' ');
+                int is = atoi(num); // indice siguiente
+                int p = num - bloques[i];
+                aux = (char *)malloc(sizeof(char) * p);
+                strncpy(aux,bloques[i],p);
+                //printf("is: %d, nombre: %s\n", is, nombre);
+                strcpy(bloques[i]->nombre, nombre);
+                int j = is;
+                bloques[i]->s = bloques[j];
+                while(!strcmp(bloques[j], "+ eof\n") == 0) {
+                    strcpy(bloques[j]->nombre, nombre);
+                    num = strchr(bloques[j], ' ');
+                    bloques[j]->s = bloques[atoi(num)];
+                    j = atoi(num); // indice siguiente
+                }
+            }
+
+  */             
                 break;
             case 2:
                 printf("Estás en la opción 2\n");
@@ -206,4 +121,86 @@ void menu() {
                 break;
         }
     } while(cmd != 0);
+}
+
+void loadFAT() {
+    FILE *fat = fopen("test.txt", "rw+");
+
+    if(fat == NULL) {
+        printf("ERROR: no se puede leer la tabla FAT\n");
+        exit(-1);
+    }
+
+    ssize_t read; // bytes leidos por getline
+    size_t len = 0; // tamaño leido por getline
+    char *line = NULL; // string con la linea leida
+
+    int i = 0; // indice de linea
+    // leer la tabla FAT linea por linea
+    while((read = getline(&line, &len, fat)) != -1) {
+        tablaFAT[i] = (char *)malloc(sizeof(read)); // reservar memoria para el string
+        strcpy(tablaFAT[i], line); // copiar la linea a la tabla FAT
+        i++; // incrementar indice
+    }
+    free(line); // liberar memoria
+
+    crearBloquesFAT();
+
+    for(i = 0; i < 80; i++) {
+        if( !(strcmp(tablaFAT[i], "-\n") == 0 ||
+            strcmp(tablaFAT[i], "+ eof\n") == 0 ||
+            tablaFAT[i][0] == '+' )) { // si es nombre
+
+            //printf("nombre: %s", tablaFAT[i]);
+
+            char *nombre;
+            char *num;
+            num = strchr(tablaFAT[i], ' ');
+            int is = atoi(num); // indice siguiente
+            int p = num - tablaFAT[i];
+            nombre = (char *)malloc(sizeof(char) * p);
+            strncpy(nombre,tablaFAT[i],p);
+            //printf("is: %d, nombre: %s\n", is, nombre);
+            strcpy(bloques[i]->nombre, nombre);
+            int j = is;
+            bloques[i]->s = bloques[j];
+            while(!strcmp(tablaFAT[j], "+ eof\n") == 0) {
+                strcpy(bloques[j]->nombre, nombre);
+                num = strchr(tablaFAT[j], ' ');
+                bloques[j]->s = bloques[atoi(num)];
+                j = atoi(num); // indice siguiente
+            }
+        }
+
+    }
+}
+
+void printFAT() {
+    int i = 0;
+    while(tablaFAT[i] != NULL) {
+        printf("%s", tablaFAT[i]);
+        i++;
+    }
+}
+
+void printBloques() {
+    int i;
+    for(i = 0; i < 80; i++) {
+        printf("%p -> %s\n", bloques[i], bloques[i]->nombre);
+    }
+
+   // bloque *b = bloques[71];
+    //printf("\n---\n");
+    //printf("%p -> %s -> %p\n", b, b->nombre, b->s);
+    //while(b->s != NULL) {
+      //  printf("%p -> %s\n", b, b->nombre);
+        //b = b->s;
+    //}
+}
+
+void crearBloquesFAT() {
+    int i;
+    for(i = 0; i < 80; i++) {
+        bloques[i] = (bloque *)crearBloque("-", NULL, NULL, NULL);
+    }
 }
