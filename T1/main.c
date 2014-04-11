@@ -1,3 +1,13 @@
+/*
+    Tarea N°1 ILI-135
+    Almacenamiento y recuperación de la información
+    "El diso blando"
+
+    Barbarita Andrea Lara Martínez
+    201021048-0
+
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -21,6 +31,12 @@ typedef struct bloque {
     struct bloque *pa;
 } bloque;
 
+typedef struct lector { //  :(
+    int pistaActual;
+    int sectorActual;
+    struct bloque *cabeza;
+} lector;
+
 char *tablaFAT[80]; // tabla FAT como strings
 
 bloque *bloques[80]; // tabla FAT como structs bloque
@@ -37,69 +53,56 @@ struct bloque *crearBloque(char nombre[30], struct bloque *siguiente, struct blo
     return bloqueNuevo;
 }
 
-int main() {
-    loadFAT();
-    //printFAT();
-    //printBloques();
-    menu();
-    return 0;
-}
-
-
 char* ingresarnom(){
-                    
-                    int t;
-                    char *nombre[33];
-                    char B[33];
-                    for(t=0; t <2;t++){
-                        fflush(stdout);
-                        fgets(B,33,stdin);
-                        *(nombre + t ) = malloc(strlen(B)+1);
-                        strcpy(nombre[t],B);
-                    
-                    }
-                    return(nombre[1]);
+    int t;
+    char *nombre[33];
+    char B[33];
+    for(t=0; t <2;t++){
+        fflush(stdout);
+        fgets(B,33,stdin);
+        *(nombre + t ) = malloc(strlen(B)+1);
+        strcpy(nombre[t],B);
+    }
+    return(nombre[1]);
 }
 
 int encontrarVacio(){ //Retorna indice espacio vacio o -1 si no hay espacio vacio
-                int i=0;
-                for(i = 0; i < 80; i++) {
-                    //printf("%p -> %s\n", bloques[i], bloques[i]->nombre);
-                    if(strcmp(bloques[i]->nombre, "-") == 0) {
-                        return(i);  
+    int i=0;
+    for(i = 0; i < 80; i++) {
+        //printf("%p -> %s\n", bloques[i], bloques[i]->nombre);
+        if(strcmp(bloques[i]->nombre, "-") == 0) {
+            return(i);  
 
-                    }
+        }
 
-                }
-                return(-1);
+    }
+    return(-1);
 }
 int encontrarIgual(char *name){ //Retorna indice espacio vacio o -1 si no hay espacio vacio
-                int i=0;
-                for(i = 0; i < 80; i++) {
-                    //printf("%p -> %s\n", bloques[i], bloques[i]->nombre);
-                    if(strcmp(bloques[i]->nombre, name) == 0) {
-                        return(i);  
+    int i=0;
+    for(i = 0; i < 80; i++) {
+        //printf("%p -> %s\n", bloques[i], bloques[i]->nombre);
+        if(strcmp(bloques[i]->nombre, name) == 0) {
+            return(i);  
 
-                    }
+        }
 
-                }
-                return(-1);
+    }
+    return(-1);
 }
 void guardarFAT(){
-        FILE * fp;
-        fp=fopen("fat.txt","w");
-        int i;
-        for(i=0; i<80;i++){
-            fprintf(fp,"%s\n",tablaFAT[i]);
-        }
-        fclose(fp);
-
+    FILE * fp;
+    fp=fopen("fat","w");
+    int i;
+    for(i=0; i<80;i++){
+        fprintf(fp,"%s",tablaFAT[i]);
+    }
+    fclose(fp);
 }
 
 void menu() {
     int cmd;
     char *name;
-
 
     do {
         printf("+-----------------------+\n");
@@ -118,12 +121,10 @@ void menu() {
                 exit(0);
                 break;
             case 1:
-                
                     printf("Estás en Ingresar Datos\n");
                     int i=0;
                     printf("Ingrese nombre del archivo: ");
                     name=ingresarnom();
-                    
                     char *nom;
                     char *num;
                     num = strchr(name, ' ');
@@ -132,31 +133,45 @@ void menu() {
                     nom = (char *)malloc(sizeof(char) * p);
                     strncpy(nom,name,p);
                     printf("is: %d, nombre: %s\n", is, nom);
-                    
                     int m=0;
+                    bloque *anterior;
+                    char siguiente[33];
                     for(m=0;m<is;m++){
                         i=encontrarVacio();
+                        printf("siguiente vacio: %d\n", i);
                         strcpy(bloques[i]->nombre,nom);
+                        if(m == 0) {
+                            anterior = bloques[i];
+                            strcpy(tablaFAT[i], nom);
+                            if(is == 1) {
+                                sprintf(siguiente, " eof\n");
+                            } else {
+                                sprintf(siguiente, " %d\n", encontrarVacio());
+                            }
+                            strcat(tablaFAT[i], siguiente);
+                        } else if(m < is - 1) {
+                            anterior->s = bloques[i];
+                            anterior = bloques[i];
+                            strcpy(tablaFAT[i], "+");
+                            sprintf(siguiente, " %d\n", encontrarVacio());
+                            strcat(tablaFAT[i], siguiente);
+                        } else {
+                            bloques[i]->s = NULL;
+                            strcpy(tablaFAT[i], "+ eof\n");
+                        }
                     }
 
-                    int r;
-                    for(r=0;r<79;r++){ 
-                        printf("%p -> %s\n", bloques[r], bloques[r]->nombre);
-                    }
                     break;
-                
             case 2:
-               
                 printf("Estás en Buscar Archivos\n");
                 printf("Ingrese el nombre de archivo a buscar: ");
                 name=ingresarnom();
-                
                 num = strchr(name, '\n');
                 int q = num - name;
                 nom = (char *)malloc(sizeof(char) * q);
                 strncpy(nom,name,q);
                 i=encontrarIgual(nom);
-                printf("Se ha encontrado el archivo %s en el bloque %d\n",nom,i);
+                //printf("Se ha encontrado el archivo %s en el bloque %d\n",nom,i);
                 int count=0;
                 bloque *bloquetemp;
                 bloquetemp=bloques[i];
@@ -164,22 +179,17 @@ void menu() {
                     count++;
                     bloquetemp=bloquetemp->s;
                 }
-                printf("El archivo tiene %d bloques\n", count);
-                printBloques();
-                
+                printf("El archivo tiene %d bloques\n", count+1);
                 break;
-                
             case 3:
                 printf("Estás en Eliminar Datos\n");
                 printf("Ingrese el nombre de archivo a eliminar: ");
                 name=ingresarnom();
-                
                 num = strchr(name, '\n');
                 int w = num - name;
                 nom = (char *)malloc(sizeof(char) * w);
                 strncpy(nom,name,w);
                 i=encontrarIgual(nom);
-
                 int count2=0;
                 bloque *bloquetemp2;
                 bloquetemp2=bloques[i];
@@ -193,37 +203,49 @@ void menu() {
                     temp->ps=NULL;
                     temp->pa=NULL;
                 }
+                strcpy(bloquetemp2->nombre, "-");
+                bloquetemp2->s = NULL;
+                bloquetemp2->ps = NULL;
+                bloquetemp2->pa = NULL;
+                count2++;
+
+                // actualizar tabla FAT
+                for(i = 0; i < 80; i++) {
+                    if(strcmp(bloques[i]->nombre, "-") == 0) {
+                        strcpy(tablaFAT[i], "-\n");
+                    }
+                }
 
                 printf("Se ha borrado el archivo %s junto con %d bloques \n",nom,count2);
-                printBloques();
 
                 break;
             case 4:
                 printf("¿Seguro desea guardar los cambios?(s=sí | n=no) ");
                 char *resp;
-                int x;
                 resp=ingresarnom();
                 if(strcmp(resp,"s\n")==0){
-                    for(x=0;x<80;x++){
-                        strcpy(tablaFAT[x],bloques[x]->nombre);
-                    }
+                    guardarFAT();
+                    exit(0);
                 }else{
                     printf("no quiere salir :D\n");
                 }
 
-                guardarFAT();
+                break;
+            case 5:
                 printFAT();
+                break;
+            case 6:
+                printBloques();
                 break;
             default:
                 printf("\n*** Entrada inválida ***\n\n");
                 break;
-            
         }
     } while(cmd != 0);
 }
 
 void loadFAT() {
-    FILE *fat = fopen("fat.txt", "rw+");
+    FILE *fat = fopen("fat", "rw+");
 
     if(fat == NULL) {
         printf("ERROR: no se puede leer la tabla FAT\n");
@@ -269,32 +291,24 @@ void loadFAT() {
                 bloques[j]->s = bloques[atoi(num)];
                 j = atoi(num); // indice siguiente
             }
+            strcpy(bloques[j]->nombre, nombre);
+            bloques[j]->s = NULL;
         }
-
     }
 }
 
 void printFAT() {
-    int i = 0;
-    while(tablaFAT[i] != NULL) {
-         printf("%s\n", tablaFAT[i]);
-        i++;
+    int i;
+    for(i = 0; i < 80; i++) {
+         printf("%d: %s", i, tablaFAT[i]);
     }
 }
 
 void printBloques() {
     int i;
     for(i = 0; i < 80; i++) {
-        printf("%p -> %s\n", bloques[i], bloques[i]->nombre);
+        printf("%d: %s\n", i, bloques[i]->nombre);
     }
-
-   // bloque *b = bloques[71];
-    //printf("\n---\n");
-    //printf("%p -> %s -> %p\n", b, b->nombre, b->s);
-    //while(b->s != NULL) {
-      //  printf("%p -> %s\n", b, b->nombre);
-        //b = b->s;
-    //}
 }
 
 void crearBloquesFAT() {
@@ -302,4 +316,10 @@ void crearBloquesFAT() {
     for(i = 0; i < 80; i++) {
         bloques[i] = (bloque *)crearBloque("-", NULL, NULL, NULL);
     }
+}
+
+int main() {
+    loadFAT();
+    menu();
+    return 0;
 }
