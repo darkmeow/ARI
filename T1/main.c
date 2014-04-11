@@ -87,7 +87,7 @@ int encontrarIgual(char *name){ //Retorna indice espacio vacio o -1 si no hay es
 }
 void guardarFAT(){
         FILE * fp;
-        fp=fopen("fat.txt","rw");
+        fp=fopen("fat.txt","w");
         int i;
         for(i=0; i<80;i++){
             fprintf(fp,"%s\n",tablaFAT[i]);

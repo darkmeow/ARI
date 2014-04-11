@@ -1,16 +1,14 @@
-primera 1
-+ 2
-+ 3
-+ eof
-+ 10
-segundo 6
-+ 7
-+ eof
+primera
+primera
+primera
+meow
+archivolinea72
+segundo
+segundo
+meow
+meow
 -
-+ 11
-+ 12
-+ 13
-+ eof
+archivolinea72
 -
 -
 -
@@ -69,7 +67,9 @@ segundo 6
 -
 -
 -
-archivolinea72 4
+-
+-
+archivolinea72
 -
 -
 -
