@@ -140,13 +140,13 @@ void menu() {
                     int p = num - name;
                     nom = (char *)malloc(sizeof(char) * p);
                     strncpy(nom,name,p);
-                    printf("is: %d, nombre: %s\n", is, nom);
+                    //printf("is: %d, nombre: %s\n", is, nom);
                     int m=0;
                     bloque *anterior;
                     char siguiente[33];
                     for(m=0;m<is;m++){
                         i=encontrarVacio();
-                        printf("siguiente vacio: %d\n", i);
+                       // printf("siguiente vacio: %d\n", i);
                         strcpy(bloques[i]->nombre,nom);
                         if(m == 0) {
                             anterior = bloques[i];

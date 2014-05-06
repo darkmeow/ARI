@@ -15,7 +15,15 @@ se logra el objetivo del tarea.
 
 **Supuestos:
 
-Símbolo para especificar bloques "+"
+*Para ingresar un dato se debe hacer con el siguiente formato:
+
+    nombre (cantidad de bloques a usar)
+
+    Por ejemplo: > hola 5
+    
+    Con esto ingresamos un archivo llamado "hola" que ocupa 5 bloques, los que serán ingresados en los bloques vacíos que encuentre.
+
+*Símbolo para especificar bloques "+"
 
 
 
