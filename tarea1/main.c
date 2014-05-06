@@ -18,6 +18,7 @@ void loadFAT();
 void crearBloquesFAT();
 void printFAT();
 void printBloques();
+int disponibles();
 char* ingresarnom();
 int encontrarVacio();
 int encontrarIgual();
@@ -123,6 +124,7 @@ void menu() {
             case 1:
                     printf("Estás en Ingresar Datos\n");
                     int i=0;
+                    printf("Bloques que quedan libres %d \n", disponibles()); 
                     printf("Ingrese nombre del archivo: ");
                     name=ingresarnom();
                     char *nom;
@@ -133,8 +135,12 @@ void menu() {
                         break;
                     }
                     int is = atoi(num); // indice siguiente
+                    if(is > disponibles()){
+                        printf("El máximo de bloques para utilizar es %d, no exceda ese valor\n", disponibles());    
+                    }
+
                     if(!(is > 0 && is <= 80)) {
-                        printf("Favor indicar un número de bloques entre 1 y 80\n");
+                        printf("Favor indicar un número de bloques entre 1 y %d\n", disponibles());
                         break;
                     }
                     int p = num - name;
@@ -337,6 +343,18 @@ void crearBloquesFAT() {
     for(i = 0; i < 80; i++) {
         bloques[i] = (bloque *)crearBloque("-", NULL, NULL, NULL);
     }
+}
+
+int disponibles() {
+     int i=0;
+     int count=0;
+    for(i = 0; i < 80; i++) {
+        //printf("%p -> %s\n", bloques[i], bloques[i]->nombre);
+        if(strcmp(bloques[i]->nombre, "-") == 0) {
+            count=count+1;
+        }        
+    }
+    return(count);  
 }
 
 int main() {
