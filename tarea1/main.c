@@ -114,7 +114,7 @@ void menu() {
         printf("+-----------------------+\n");
         printf("> ");
         scanf("%d", &cmd);
-
+        if(cmd >= 0 && cmd < 10) {
         switch(cmd) {
             case 0:
                 printf("Chao :)\n");
@@ -128,7 +128,15 @@ void menu() {
                     char *nom;
                     char *num;
                     num = strchr(name, ' ');
+                    if(num == NULL) {
+                        printf("Debe ingresar nombre y cantidad de bloques\n");
+                        break;
+                    }
                     int is = atoi(num); // indice siguiente
+                    if(!(is > 0 && is <= 80)) {
+                        printf("Favor indicar un número de bloques entre 1 y 80\n");
+                        break;
+                    }
                     int p = num - name;
                     nom = (char *)malloc(sizeof(char) * p);
                     strncpy(nom,name,p);
@@ -156,6 +164,7 @@ void menu() {
                             sprintf(siguiente, " %d\n", encontrarVacio());
                             strcat(tablaFAT[i], siguiente);
                         } else {
+                            anterior->s = bloques[i];
                             bloques[i]->s = NULL;
                             strcpy(tablaFAT[i], "+ eof\n");
                         }
@@ -172,14 +181,18 @@ void menu() {
                 strncpy(nom,name,q);
                 i=encontrarIgual(nom);
                 //printf("Se ha encontrado el archivo %s en el bloque %d\n",nom,i);
-                int count=0;
-                bloque *bloquetemp;
-                bloquetemp=bloques[i];
-                while((bloquetemp->s)!= NULL){
-                    count++;
-                    bloquetemp=bloquetemp->s;
+                if(i >= 0) { // posición encontrada
+                    int count=0;
+                    bloque *bloquetemp;
+                    bloquetemp=bloques[i];
+                    while((bloquetemp->s)!= NULL){
+                        count++;
+                        bloquetemp=bloquetemp->s;
+                    }
+                    printf("El archivo tiene %d bloques\n", count+1);
+                } else { // No se encontró archivo
+                    printf("No se encontró el archivo\n");
                 }
-                printf("El archivo tiene %d bloques\n", count+1);
                 break;
             case 3:
                 printf("Estás en Eliminar Datos\n");
@@ -190,34 +203,37 @@ void menu() {
                 nom = (char *)malloc(sizeof(char) * w);
                 strncpy(nom,name,w);
                 i=encontrarIgual(nom);
-                int count2=0;
-                bloque *bloquetemp2;
-                bloquetemp2=bloques[i];
-                while((bloquetemp2->s)!= NULL){
-                     count2++;
-                    strcpy(bloquetemp2->nombre,"-");
+                if(i >= 0) { // posición encontrada
+                    int count2=0;
+                    bloque *bloquetemp2;
                     bloque *temp;
-                    temp=bloquetemp2;
-                    bloquetemp2=bloquetemp2->s;
-                    temp->s=NULL;
-                    temp->ps=NULL;
-                    temp->pa=NULL;
-                }
-                strcpy(bloquetemp2->nombre, "-");
-                bloquetemp2->s = NULL;
-                bloquetemp2->ps = NULL;
-                bloquetemp2->pa = NULL;
-                count2++;
-
-                // actualizar tabla FAT
-                for(i = 0; i < 80; i++) {
-                    if(strcmp(bloques[i]->nombre, "-") == 0) {
-                        strcpy(tablaFAT[i], "-\n");
+                    bloquetemp2=bloques[i];
+                    while((bloquetemp2->s)!= NULL){
+                        count2++;
+                        strcpy(bloquetemp2->nombre,"-");
+                        temp=bloquetemp2;
+                        bloquetemp2=bloquetemp2->s;
+                        temp->s=NULL;
+                        temp->ps=NULL;
+                        temp->pa=NULL;
                     }
+                    strcpy(bloquetemp2->nombre, "-");
+                    bloquetemp2->s=NULL;
+                    bloquetemp2->ps=NULL;
+                    bloquetemp2->pa=NULL;
+                    count2++;
+
+                    // actualizar tabla FAT
+                    for(i = 0; i < 80; i++) {
+                        if(strcmp(bloques[i]->nombre, "-") == 0) {
+                            strcpy(tablaFAT[i], "-\n");
+                        }
+                    }
+
+                    printf("Se ha borrado el archivo %s junto con %d bloques \n",nom,count2);
+                } else {
+                    printf("No se encontró el archivo\n");
                 }
-
-                printf("Se ha borrado el archivo %s junto con %d bloques \n",nom,count2);
-
                 break;
             case 4:
                 printf("¿Seguro desea guardar los cambios?(s=sí | n=no) ");
@@ -238,6 +254,11 @@ void menu() {
                 printBloques();
                 break;
             default:
+                printf("\n*** Entrada inválida ***\n\n");
+                break;
+        }
+        } else {
+
                 printf("\n*** Entrada inválida ***\n\n");
                 break;
         }
