@@ -1,0 +1,29 @@
+Barbarita Andrea Lara Martínez
+201021048-0
+Grupo 12
+Tarea 1
+____
+
+**Implementación
+
+Se soluciona la simulación de discos al leer el archivo fat, pasarlo
+a un arreglo y luego crear un arreglo de estructuras bloques que sirve
+para encontrar la información fácilmente, manteniendo la disposición
+original de la tabla fat, adquiriendo nombres del archivos, entre otro
+tipo de manejos de punteros. A través del manejo de estructuras y listas
+se logra el objetivo del tarea.
+
+**Supuestos:
+
+Símbolo para especificar bloques "+"
+
+
+
+**EasterEggs:
+
+Al presionar 5 en el menú se imprime la tablaFAT
+Al presionar 6 en el menú se imprime bloques
+
+---
+
+
