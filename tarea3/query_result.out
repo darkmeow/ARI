@@ -1,0 +1,34 @@
+                    concat                     |            carrera             
+-----------------------------------------------+--------------------------------
+ Barbarita      Lara           Martínez        | Ingeniería Civil Informática  
+(1 fila)
+
+             nombre             | stock 
+--------------------------------+-------
+ Pan con Chancho                |  1000
+ Queque                         |   100
+ Pinguinos                      |   800
+ Manqueque                      |   400
+ Super 8                        |   230
+(5 filas)
+
+                    nombre                     |   rut    
+-----------------------------------------------+----------
+ Barbarita      Lara           Martínez        | 16207335
+ Roberto        Carvajal       Sandoval        | 16431751
+(2 filas)
+
+             nombre             | stock 
+--------------------------------+-------
+ Queque                         |   100
+ Manqueque                      |   400
+ Super 8                        |   230
+(3 filas)
+
+ id_producto |   rut    | fecha_y_hora | cantidad |    dia    
+-------------+----------+--------------+----------+-----------
+           1 | 16207335 | 2014-06-24   |        2 | Martes
+           2 | 16431751 | 2014-07-02   |        1 | Miércoles
+           1 | 16431751 | 2014-07-01   |        3 | Martes
+(3 filas)
+
