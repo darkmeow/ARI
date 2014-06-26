@@ -33,10 +33,9 @@ WHERE stock < 500
 
 --Mostrar el nombre completo de todos los empleados que hayan vendido algún "Queque" un "Martes"
 
-SELECT CONCAT(A1.nombre, A1.apellido_paterno, A1.apellido_materno) NOMBRE,to_char(fecha_y_hora::timestamp, 'TMDay') AS dia
-FROM public."Ventas" Ventas, public."Empleados" A1
-GROUP BY Ventas.rut, fecha_y_hora, nombre, apellido_paterno, apellido_materno, A1.rut
-WHERE A1.rut = Ventas.rut 
+SELECT *,to_char(fecha_y_hora::timestamp, 'TMDay') AS dia
+FROM public."Ventas"
+GROUP BY rut, fecha_y_hora, id_producto  
 HAVING to_char(fecha_y_hora::timestamp, 'TMDay') = 'Martes' 
 ;
 
