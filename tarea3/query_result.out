@@ -18,16 +18,34 @@
  Roberto        Carvajal       Sandoval        | 16431751
 (2 filas)
 
-             nombre             | stock 
---------------------------------+-------
- Queque                         |   100
- Manqueque                      |   400
- Super 8                        |   230
-(3 filas)
+             nombre             | precio 
+--------------------------------+--------
+ Pinguinos                      |    350
+ Manqueque                      |    300
+ Super 8                        |    100
+ Pan con Chancho                |    200
+(4 filas)
 
                     nombre                     |  dia   |        nombre_producto         
 -----------------------------------------------+--------+--------------------------------
  Roberto        Carvajal       Sandoval        | Martes | Queque                        
  Barbarita      Lara           Martínez        | Martes | Queque                        
 (2 filas)
+
+INSERT 0 1
+             nombre             |              tipo              | precio | stock 
+--------------------------------+--------------------------------+--------+-------
+ Negrita                        | Comestible                     |    100 |   150
+(1 fila)
+
+UPDATE 1
+             nombre             | stock | precio 
+--------------------------------+-------+--------
+ Negrita                        |   100 |    100
+(1 fila)
+
+DELETE 1
+ nombre | stock | precio 
+--------+-------+--------
+(0 filas)
 

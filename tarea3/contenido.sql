@@ -1,5 +1,5 @@
 --
--- PostgreSQL database dump
+-- Datos de ejemplo!
 --
 
 SET statement_timeout = 0;
@@ -72,8 +72,3 @@ INSERT INTO "Ventas" VALUES (2, 16207335, '2014-06-24', 3);
 --
 
 SELECT pg_catalog.setval('"Ventas_id_producto_seq"', 1, false);
-
-
---
--- PostgreSQL database dump complete
---

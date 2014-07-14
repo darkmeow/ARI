@@ -8,14 +8,14 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; 
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -;  
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -28,7 +28,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: Empleados; Type: TABLE; Schema: public; Owner: meow; Tablespace: 
+-- Name: Empleados; Type: TABLE; Schema: public; 
 --
 
 CREATE TABLE "Empleados" (
@@ -43,11 +43,11 @@ CREATE TABLE "Empleados" (
 
 
 --
--- Name: Horarios; Type: TABLE; Schema: public; Owner: meow; Tablespace: 
+-- Name: Horarios; Type: TABLE; Schema: public; 
 --
 
 CREATE TABLE "Horarios" (
-    id_horario integer NOT NULL,
+    id_horario serial NOT NULL,
     rut integer NOT NULL,
     dia character(9),
     hora_inicio time without time zone NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE "Horarios" (
 
 
 --
--- Name: Horarios_id_horario_seq; Type: SEQUENCE; Schema: public; Owner: meow
+-- Name: Horarios_id_horario_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE "Horarios_id_horario_seq"
@@ -70,18 +70,18 @@ CREATE SEQUENCE "Horarios_id_horario_seq"
 
 
 --
--- Name: Horarios_id_horario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: meow
+-- Name: Horarios_id_horario_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "Horarios_id_horario_seq" OWNED BY "Horarios".id_horario;
 
 
 --
--- Name: Productos; Type: TABLE; Schema: public; Owner: meow; Tablespace: 
+-- Name: Productos; Type: TABLE; Schema: public; 
 --
 
 CREATE TABLE "Productos" (
-    id_producto integer NOT NULL,
+    id_producto serial NOT NULL,
     nombre character(30) NOT NULL,
     tipo character(30) NOT NULL,
     precio integer NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE "Productos" (
 
 
 --
--- Name: Productos_id_producto_seq; Type: SEQUENCE; Schema: public; Owner: meow
+-- Name: Productos_id_producto_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE "Productos_id_producto_seq"
@@ -104,18 +104,18 @@ CREATE SEQUENCE "Productos_id_producto_seq"
 
 
 --
--- Name: Productos_id_producto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: meow
+-- Name: Productos_id_producto_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE "Productos_id_producto_seq" OWNED BY "Productos".id_producto;
 
 
 --
--- Name: Ventas; Type: TABLE; Schema: public; Owner: meow; Tablespace: 
+-- Name: Ventas; Type: TABLE; Schema: public;
 --
 
 CREATE TABLE "Ventas" (
-    id_producto integer NOT NULL,
+    id_producto serial NOT NULL,
     rut integer NOT NULL,
     fecha_y_hora date NOT NULL,
     cantidad integer NOT NULL
@@ -124,7 +124,7 @@ CREATE TABLE "Ventas" (
 
 
 --
--- Name: Ventas_id_producto_seq; Type: SEQUENCE; Schema: public; Owner: meow
+-- Name: Ventas_id_producto_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE "Ventas_id_producto_seq"
@@ -137,50 +137,35 @@ CREATE SEQUENCE "Ventas_id_producto_seq"
 
 
 --
--- Name: Ventas_id_producto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: meow
+-- Name: Ventas_id_producto_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE "Ventas_id_producto_seq" OWNED BY "Ventas".id_producto;
 
 
 --
--- Name: test; Type: VIEW; Schema: public; Owner: meow
---
-
-CREATE VIEW test AS
- SELECT "Empleados".apellido_materno,
-    "Empleados".apellido_paterno,
-    "Empleados".dv,
-    "Empleados".rut,
-    "Empleados".nombre,
-    "Empleados".carrera
-   FROM "Empleados";
-
-
-
---
--- Name: id_horario; Type: DEFAULT; Schema: public; Owner: meow
+-- Name: id_horario; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE ONLY "Horarios" ALTER COLUMN id_horario SET DEFAULT nextval('"Horarios_id_horario_seq"'::regclass);
 
 
 --
--- Name: id_producto; Type: DEFAULT; Schema: public; Owner: meow
+-- Name: id_producto; Type: DEFAULT; Schema: public; 
 --
 
 ALTER TABLE ONLY "Productos" ALTER COLUMN id_producto SET DEFAULT nextval('"Productos_id_producto_seq"'::regclass);
 
 
 --
--- Name: id_producto; Type: DEFAULT; Schema: public; Owner: meow
+-- Name: id_producto; Type: DEFAULT; Schema: public; 
 --
 
 ALTER TABLE ONLY "Ventas" ALTER COLUMN id_producto SET DEFAULT nextval('"Ventas_id_producto_seq"'::regclass);
 
 
 --
--- Name: Empleados_pkey; Type: CONSTRAINT; Schema: public; Owner: meow; Tablespace: 
+-- Name: Empleados_pkey; Type: CONSTRAINT; Schema: public;  
 --
 
 ALTER TABLE ONLY "Empleados"
@@ -188,7 +173,7 @@ ALTER TABLE ONLY "Empleados"
 
 
 --
--- Name: Horarios_pkey; Type: CONSTRAINT; Schema: public; Owner: meow; Tablespace: 
+-- Name: Horarios_pkey; Type: CONSTRAINT; Schema: public;  
 --
 
 ALTER TABLE ONLY "Horarios"
@@ -196,7 +181,7 @@ ALTER TABLE ONLY "Horarios"
 
 
 --
--- Name: Productos_pkey; Type: CONSTRAINT; Schema: public; Owner: meow; Tablespace: 
+-- Name: Productos_pkey; Type: CONSTRAINT; Schema: public;
 --
 
 ALTER TABLE ONLY "Productos"
@@ -204,7 +189,7 @@ ALTER TABLE ONLY "Productos"
 
 
 --
--- Name: Ventas_pkey; Type: CONSTRAINT; Schema: public; Owner: meow; Tablespace: 
+-- Name: Ventas_pkey; Type: CONSTRAINT; Schema: public; 
 --
 
 ALTER TABLE ONLY "Ventas"
@@ -213,7 +198,7 @@ ALTER TABLE ONLY "Ventas"
 
 
 --
--- Name: Horarios_rut_fkey; Type: FK CONSTRAINT; Schema: public; Owner: meow
+-- Name: Horarios_rut_fkey; Type: FK CONSTRAINT; Schema: public; 
 --
 
 ALTER TABLE ONLY "Horarios"
@@ -221,7 +206,7 @@ ALTER TABLE ONLY "Horarios"
 
 
 --
--- Name: Ventas_id_producto_fkey; Type: FK CONSTRAINT; Schema: public; Owner: meow
+-- Name: Ventas_id_producto_fkey; Type: FK CONSTRAINT; Schema: public;
 --
 
 ALTER TABLE ONLY "Ventas"
@@ -229,7 +214,7 @@ ALTER TABLE ONLY "Ventas"
 
 
 --
--- Name: Ventas_rut_fkey; Type: FK CONSTRAINT; Schema: public; Owner: meow
+-- Name: Ventas_rut_fkey; Type: FK CONSTRAINT; Schema: public;
 --
 
 ALTER TABLE ONLY "Ventas"

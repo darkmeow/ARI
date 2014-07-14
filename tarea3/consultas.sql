@@ -39,4 +39,23 @@ GROUP BY Ventas.rut, fecha_y_hora, A1.nombre, apellido_paterno, apellido_materno
 HAVING to_char(fecha_y_hora::timestamp, 'TMDay') = 'Martes' AND  A1.rut = Ventas.rut AND Ventas.id_producto = A2.id_producto AND A2.nombre = 'Queque'
 ;
 
+--INSERT Ingresamos un nuevo producto
+INSERT INTO "Productos" VALUES(DEFAULT,'Negrita','Comestible',100,150);
+
+--SELECT Seleccionamos Negrita y vemos su información
+SELECT nombre, tipo, precio, stock FROM public."Productos" WHERE nombre = 'Negrita';
+
+--UPDATE Cambiamos el Stock de la Negrita de 150 a 100
+UPDATE "Productos" SET stock = 100 WHERE nombre = 'Negrita';
+
+--Nuevo Select para ver si funciona
+SELECT nombre, stock, precio FROM public."Productos" WHERE nombre = 'Negrita';
+
+--DELETE Borramos el producto
+DELETE FROM public."Productos" WHERE nombre = 'Negrita';
+
+--Nuevo Select para ver si funciona
+SELECT nombre, stock, precio FROM public."Productos" WHERE nombre = 'Negrita';
+
+
 \o
