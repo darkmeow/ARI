@@ -33,7 +33,7 @@ SET default_with_oids = false;
 
 CREATE TABLE "Empleados" (
     rut integer NOT NULL,
-    dv "char" NOT NULL,
+    dv character(1) NOT NULL,
     nombre character(15) NOT NULL,
     apellido_materno character(15) NOT NULL,
     apellido_paterno character(15) NOT NULL,
@@ -41,7 +41,6 @@ CREATE TABLE "Empleados" (
 );
 
 
-ALTER TABLE public."Empleados" OWNER TO meow;
 
 --
 -- Name: Horarios; Type: TABLE; Schema: public; Owner: meow; Tablespace: 
@@ -56,7 +55,6 @@ CREATE TABLE "Horarios" (
 );
 
 
-ALTER TABLE public."Horarios" OWNER TO meow;
 
 --
 -- Name: Horarios_id_horario_seq; Type: SEQUENCE; Schema: public; Owner: meow
@@ -70,7 +68,6 @@ CREATE SEQUENCE "Horarios_id_horario_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Horarios_id_horario_seq" OWNER TO meow;
 
 --
 -- Name: Horarios_id_horario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: meow
@@ -92,7 +89,6 @@ CREATE TABLE "Productos" (
 );
 
 
-ALTER TABLE public."Productos" OWNER TO meow;
 
 --
 -- Name: Productos_id_producto_seq; Type: SEQUENCE; Schema: public; Owner: meow
@@ -106,7 +102,6 @@ CREATE SEQUENCE "Productos_id_producto_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Productos_id_producto_seq" OWNER TO meow;
 
 --
 -- Name: Productos_id_producto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: meow
@@ -127,7 +122,6 @@ CREATE TABLE "Ventas" (
 );
 
 
-ALTER TABLE public."Ventas" OWNER TO meow;
 
 --
 -- Name: Ventas_id_producto_seq; Type: SEQUENCE; Schema: public; Owner: meow
@@ -141,7 +135,6 @@ CREATE SEQUENCE "Ventas_id_producto_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Ventas_id_producto_seq" OWNER TO meow;
 
 --
 -- Name: Ventas_id_producto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: meow
@@ -164,7 +157,6 @@ CREATE VIEW test AS
    FROM "Empleados";
 
 
-ALTER TABLE public.test OWNER TO meow;
 
 --
 -- Name: id_horario; Type: DEFAULT; Schema: public; Owner: meow

@@ -25,10 +25,10 @@ WHERE A1.rut = A2.rut AND A2.dia = 'Viernes'
 
 --Mostrar el nombre de todos los productos que cuestan menos de $500
 
-SELECT nombre, stock
+SELECT nombre, precio
 FROM
   public."Productos"
-WHERE stock < 500
+WHERE precio < 500
 ;
 
 --Mostrar el nombre completo de todos los empleados que hayan vendido algún "Queque" un "Martes"
