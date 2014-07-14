@@ -39,20 +39,35 @@ GROUP BY Ventas.rut, fecha_y_hora, A1.nombre, apellido_paterno, apellido_materno
 HAVING to_char(fecha_y_hora::timestamp, 'TMDay') = 'Martes' AND  A1.rut = Ventas.rut AND Ventas.id_producto = A2.id_producto AND A2.nombre = 'Queque'
 ;
 
---INSERT Ingresamos un nuevo producto
-INSERT INTO "Productos" VALUES(DEFAULT,'Negrita','Comestible',100,150);
+-- CONSULTAS EXTRAS
 
---SELECT Seleccionamos Negrita y vemos su información
-SELECT nombre, tipo, precio, stock FROM public."Productos" WHERE nombre = 'Negrita';
+--INSERT
+INSERT INTO "Productos" VALUES(DEFAULT,'Negrita','Comestible',100,150); -- Ingresar producto nuevo
+INSERT INTO "Productos" VALUES(DEFAULT, 'Chocolito', 'Comestible',1000,100); -- Ingresar producto nuevo
+INSERT INTO "Empleados" VALUES(12245954,'k','Juan','Perez','Soto', 'Ingeniería Civil'); -- Ingresar empleado nuevo
+INSERT INTO "Empleados" VALUES(18203034,1,'Alexis','Medel','Vidal', 'Ingeniería Electrónica'); -- Ingresar empleado nuevo
+INSERT INTO "Horarios" VALUES(DEFAULT,12245954,'Jueves', '09:00:00', '13:00:00'); -- Ingresar horario nuevo
 
---UPDATE Cambiamos el Stock de la Negrita de 150 a 100
-UPDATE "Productos" SET stock = 100 WHERE nombre = 'Negrita';
+--SELECT
+SELECT nombre, tipo, precio, stock FROM public."Productos" WHERE nombre = 'Negrita'; -- Seleccionar producto llamado Negrita
+SELECT nombre, tipo, precio, stock FROM public."Productos" WHERE stock < 10; -- Seleccionar productos con stock menor a 10
+SELECT * FROM public."Empleados"; -- Seleccionar todos los empleados
+SELECT * FROM public."Ventas" WHERE cantidad > 3; -- Seleccionar ventas cuya cantidad sea superior a 3
+SELECT * FROM public."Horarios" WHERE dia='Jueves'; -- Seleccionar el horario de los días Jueves
 
---Nuevo Select para ver si funciona
-SELECT nombre, stock, precio FROM public."Productos" WHERE nombre = 'Negrita';
+--UPDATE
+UPDATE "Productos" SET stock = 100 WHERE nombre = 'Negrita'; -- Actualizar el stock del producto Negrita a 100
+UPDATE "Horarios" SET hora_inicio = '08:00:00' WHERE rut = 12245954 AND dia = 'Jueves'; -- Actualizar el horario de inicio para el turno del día Jueves del empleado RUT 12245954
+UPDATE "Productos" SET precio = 200 WHERE nombre = 'Negrita'; -- Actualizar el precio del producto Negrita a 200
+UPDATE "Horarios" SET rut = 18203034 WHERE dia = 'Lunes'; -- Actualizar el horario del día Lunes y asignarlo al empleado 18203034
+UPDATE "Empleados" SET carrera = 'Ingeniería Civil Electrónica' WHERE rut = 18203034; -- Actualizar la carrera del empleado 18203034
 
 --DELETE Borramos el producto
-DELETE FROM public."Productos" WHERE nombre = 'Negrita';
+DELETE FROM public."Productos" WHERE nombre = 'Negrita'; -- Eliminar producto de nombre Negrita
+DELETE FROM public."Horarios" WHERE rut = 12245954 OR rut = 18203034; -- Eliminar horarios de empleado 12245954 o 18203034
+DELETE FROM public."Productos" WHERE precio = 1000; -- Eliminar productos de precio 1000
+DELETE FROM public."Empleados" WHERE rut = 12245954; -- Eliminar empleado de rut 12245954
+DELETE FROM public."Horarios" WHERE dia = 'Domingo' -- Eliminar los horarios del día domingo :D
 
 --Nuevo Select para ver si funciona
 SELECT nombre, stock, precio FROM public."Productos" WHERE nombre = 'Negrita';
