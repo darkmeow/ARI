@@ -40,18 +40,22 @@ HAVING to_char(fecha_y_hora::timestamp, 'TMDay') = 'Martes' AND  A1.rut = Ventas
 ;
 
 --INSERT Ingresamos un nuevo producto
-INSERT INTO "Productos" VALUES ("", 'Negrita', 'Comestible', 100, 150);
+INSERT INTO "Productos" VALUES(DEFAULT,'Negrita','Comestible',100,150);
 
 --SELECT Seleccionamos Negrita y vemos su información
-SELECT nombre, tipo, precio, stock FROM public."Productos" WHERE nombre = 'Negrita' 
+SELECT nombre, tipo, precio, stock FROM public."Productos" WHERE nombre = 'Negrita';
 
 --UPDATE Cambiamos el Stock de la Negrita de 150 a 100
-UPDATE "Productos" SET stock = 100 WHERE nombre = 'Negrita' 
+UPDATE "Productos" SET stock = 100 WHERE nombre = 'Negrita';
 
 --Nuevo Select para ver si funciona
-SELECT nombre, stock, precio FROM public."Productos" WHERE nombre = 'Negrita' 
+SELECT nombre, stock, precio FROM public."Productos" WHERE nombre = 'Negrita';
 
 --DELETE Borramos el producto
-DELETE FROM public."Productos" WHERE nombre = 'Negrita'
+DELETE FROM public."Productos" WHERE nombre = 'Negrita';
+
+--Nuevo Select para ver si funciona
+SELECT nombre, stock, precio FROM public."Productos" WHERE nombre = 'Negrita';
+
 
 \o

@@ -47,7 +47,7 @@ CREATE TABLE "Empleados" (
 --
 
 CREATE TABLE "Horarios" (
-    id_horario integer NOT NULL,
+    id_horario serial NOT NULL,
     rut integer NOT NULL,
     dia character(9),
     hora_inicio time without time zone NOT NULL,
@@ -81,7 +81,7 @@ ALTER SEQUENCE "Horarios_id_horario_seq" OWNED BY "Horarios".id_horario;
 --
 
 CREATE TABLE "Productos" (
-    id_producto integer NOT NULL,
+    id_producto serial NOT NULL,
     nombre character(30) NOT NULL,
     tipo character(30) NOT NULL,
     precio integer NOT NULL,
@@ -115,7 +115,7 @@ ALTER SEQUENCE "Productos_id_producto_seq" OWNED BY "Productos".id_producto;
 --
 
 CREATE TABLE "Ventas" (
-    id_producto integer NOT NULL,
+    id_producto serial NOT NULL,
     rut integer NOT NULL,
     fecha_y_hora date NOT NULL,
     cantidad integer NOT NULL
